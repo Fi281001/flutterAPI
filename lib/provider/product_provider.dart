@@ -6,6 +6,7 @@ import 'package:project_test/product_model.dart';
 
 class ProductProvider extends ChangeNotifier {
   List<ProductModel> list = [];
+  List<ProductModel> listCart = [];
   void getList() async {
     String urlAPI = 'https://fakestoreapi.com/products';
     var client = http.Client();
@@ -25,5 +26,20 @@ class ProductProvider extends ChangeNotifier {
 
     notifyListeners();
   }
- 
+ void getListCart(ProductModel e) async {
+    //lay ds san pham tu FakeStoreAPI
+
+    if (listCart.isEmpty) {
+      listCart.add(e);
+    } else if (listCart.every((element) => element.id == e.id)) {
+      for (var element in listCart) {
+        if (element.id == e.id) {
+          element.soluong = (element.soluong! + 1);
+        }
+      }
+    } else {
+      listCart.add(e);
+    }
+    notifyListeners();
+  }
 }

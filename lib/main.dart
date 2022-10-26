@@ -18,7 +18,7 @@ void main() {
         ChangeNotifierProvider(create: (_) => ProductProvider()),
         ChangeNotifierProvider(create: (_) => Categaries()),
       ],
-      child: MaterialApp(
+      child: const MaterialApp(
         home: ProductListPage(),
        
       ),

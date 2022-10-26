@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:project_test/Product_Details.dart';
 import 'package:project_test/main.dart';
@@ -19,7 +21,8 @@ class _ProductListPageState extends State<ProductListPage> {
 
  bool showGrid = true;
  List<ProductModel> listPD = [];
- 
+  
+
   @override
   Widget build(BuildContext context) {
     
@@ -48,7 +51,7 @@ class _ProductListPageState extends State<ProductListPage> {
         child: Column(
           children: [
             buidSp(context, categories),
-            buidSeach(context),
+            buidSeach(context,productProvider),
             SizedBox(
               height: 10,
             ),
@@ -86,7 +89,8 @@ class _ProductListPageState extends State<ProductListPage> {
     );
   }
 
-  buidSeach(BuildContext context){
+  buidSeach(BuildContext context, ProductProvider productProvider){
+   
     return Row(
       children: [
         Icon(Icons.search),
@@ -179,9 +183,10 @@ class _ProductListPageState extends State<ProductListPage> {
         ),
         TextButton(
           onPressed: () =>{
+              
              Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => Cart()),
+              MaterialPageRoute(builder: (context) => Cart(listCart: productProvider.listCart)),
             )
           },
           style: ButtonStyle(
@@ -211,7 +216,7 @@ class _ProductListPageState extends State<ProductListPage> {
                       
                         child: TextButton(
                           onPressed: (() {
-                            print("${listPD}");
+                            print("${e}");
                           }) ,
                           child:  Text(e, style: TextStyle(color: Colors.white) ),
                          style: ButtonStyle(
@@ -238,7 +243,7 @@ buildList(BuildContext context, ProductProvider productProvider) {
         children: [
         ...listPD.map((e) {
               return Container(
-
+                
                     margin: EdgeInsets.all(20),
                     
                     decoration:
@@ -267,14 +272,15 @@ buildList(BuildContext context, ProductProvider productProvider) {
                         height: 10
                           ),
                         TextButton(onPressed: ()=> {
+                          print(e.soluong),
                           Navigator.push(context,
-                           MaterialPageRoute(builder: (context) => ProductDetails()),),
+                           MaterialPageRoute(builder: (context) => ProductDetails(product: e)),),
                         },
                         style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(Colors.orange),
                             ),
                         child: Text(
-                              "Xem Chi Tiết",
+                              "xem chi tiết",
                               style: TextStyle(
                                 fontSize: 14,
                                 color: Colors.white,
@@ -323,14 +329,16 @@ buildList(BuildContext context, ProductProvider productProvider) {
                         height: 10
                           ),
                         TextButton(onPressed: ()=> {
+                          
+                          
                           Navigator.push(context,
-                           MaterialPageRoute(builder: (context) => ProductDetails()),),
+                           MaterialPageRoute(builder: (context) => ProductDetails(product: e)),),
                         },
                         style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(Colors.orange),
                             ),
                         child: Text(
-                              "Xem Chi Tiết",
+                              "Xem chi tiết",
                               style: TextStyle(
                                 fontSize: 14,
                                 color: Colors.white,
